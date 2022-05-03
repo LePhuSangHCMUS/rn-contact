@@ -7,5 +7,6 @@ const devEnvironmentVariables={
 const prodEnvironmentVariables={
     PROD_BACKEND_URL
 }
+console.log(DEV_BACKEND_URL);
 
 export default __DEV__?devEnvironmentVariables:prodEnvironmentVariables

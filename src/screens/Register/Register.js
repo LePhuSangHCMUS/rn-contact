@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { icFLC } from "../../assets/icons";
 import Container from "../../components/common/Container";
@@ -7,6 +7,7 @@ import CustomButton from "../../components/common/CustomButton";
 import InputCustom from "../../components/common/Input";
 import routeNames from "../../constants/routeNames";
 import styles from "./styles";
+import axiosInstance from "../../helpers/axiosInstance"
 // { navigation:{navigate}, route }
 import envs from "../../config/env"
 const ERRORS={
@@ -28,7 +29,9 @@ export default function Register() {
     navigate(routeNames.LOGIN, {});
 
   }
-
+  useEffect(() => {
+    axiosInstance.post("/auth/login").then().catch(err=>console.log('ERROR',err?.response))
+},[])
   const handleRegister = () => {
     if (!form.username) {
       setErrors((prev) => {
