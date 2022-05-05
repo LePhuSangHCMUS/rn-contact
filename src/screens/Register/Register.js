@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { icFLC } from "../../assets/icons";
 import Container from "../../components/common/Container";
@@ -7,9 +7,13 @@ import CustomButton from "../../components/common/CustomButton";
 import InputCustom from "../../components/common/Input";
 import routeNames from "../../constants/routeNames";
 import styles from "./styles";
-import axiosInstance from "../../helpers/axiosInstance"
+import { register } from '../../context/actions/auth/register';
 // { navigation:{navigate}, route }
+import { GlobalContext } from '../../context/Provider';
 import envs from "../../config/env"
+
+console.log('EB+NV',envs);
+
 const ERRORS={
   username:"Please enter username !" ,
   firstName:"Please enter first name !",
@@ -22,17 +26,19 @@ export default function Register() {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const navigation = useNavigation();
-
+  const {
+    authDispatch,
+    authStates: { loading,error,data}
+  } = useContext(GlobalContext)
   const { navigate } = navigation
-
   const handleNavigationLogin = () => {
     navigate(routeNames.LOGIN, {});
 
   }
-  useEffect(() => {
-    axiosInstance.post("/auth/login").then().catch(err=>console.log('ERROR',err?.response))
-},[])
+console.log('authStates',loading);
+
   const handleRegister = () => {
+    
     if (!form.username) {
       setErrors((prev) => {
         return { ...prev, username: ERRORS.username }
@@ -59,6 +65,13 @@ export default function Register() {
         })
       }
     
+    if (Object.values(form).every(item => item.trim().length > 0) &&
+      Object.values(form).length === 5 &&
+      Object.values(errors).every(item => !item)
+    ) {
+      register(form)(authDispatch)
+    }
+    
     }
     const handelChange = ({ name, value }) => {
       if (value && errors?.[name]) {
@@ -75,8 +88,6 @@ export default function Register() {
       setForm({ ...form, [name]: value });
     }
     
-
-    console.log('ENV',envs);
     
     return (<Container>
 
@@ -133,7 +144,7 @@ export default function Register() {
 
           />
 
-          <CustomButton onPress={handleRegister} primary title="Login" />
+          <CustomButton disabled={loading} loading={loading} onPress={handleRegister} primary title="Register" />
         </View>
 
         <View style={styles.loginBlock} >

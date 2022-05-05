@@ -20,7 +20,8 @@ export default function DetailsScreen() {
     navigate(routeNames.REGISTER, {});    
 
   }
-  console.log('ENV',envs);  
+
+  console.log(envs)
   return (<Container>
 
     <Image style={styles.logoImage} source={icFLC} alt="FLC Icon" />

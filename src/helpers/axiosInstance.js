@@ -7,12 +7,11 @@ const headers = {
 }
 
 const axiosInstance = axios.create({
-    baseURL: envs?.DEV_BACKEND_URL,
+    baseURL: envs?.BACKEND_URL,
     headers
 })
-
-axios.interceptors.request.use(async(config) => {
-    try {
+axiosInstance.interceptors.request.use(async (config) => {
+        try {
         const token = await AsyncStorage.getItem('@token');
         if (token) {
             config.headers.Authorization=`Bearer ${token}`
@@ -22,7 +21,7 @@ axios.interceptors.request.use(async(config) => {
     } catch (e) {
         // saving error
 
-        console.log('ERROR',e);
+        console.log('ERROR AXIOS',e);
         
       }
  

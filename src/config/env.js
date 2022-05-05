@@ -1,12 +1,12 @@
-import {DEV_BACKEND_URL,PROD_BACKEND_URL} from '@env'
+import { REACT_APP_PROD_BACKEND_URL,REACT_APP_DEV_BACKEND_URL,  } from '@env'
 
-
-const devEnvironmentVariables={
-    DEV_BACKEND_URL
+const devEnvironmentVariables = {
+    BACKEND_URL:REACT_APP_DEV_BACKEND_URL
 }
-const prodEnvironmentVariables={
-    PROD_BACKEND_URL
+const prodEnvironmentVariables = {
+    BACKEND_URL:REACT_APP_PROD_BACKEND_URL
 }
-console.log(DEV_BACKEND_URL);
 
-export default __DEV__?devEnvironmentVariables:prodEnvironmentVariables
+console.log(devEnvironmentVariables)
+
+export default __DEV__ ? devEnvironmentVariables : prodEnvironmentVariables
