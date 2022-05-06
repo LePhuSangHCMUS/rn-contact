@@ -8,7 +8,15 @@
 
 import React from 'react';
 import 'react-native-gesture-handler';
+import { NativeModules } from 'react-native';
 const networkDebugger = () => {
+ //Enable Default Debuggerr
+  // NativeModules.DevSettings.setIsDebuggingRemotely(true);
+
+
+
+
+ //Enable Inspect Network
   global.XMLHttpRequest = global.originalXMLHttpRequest
   ? global.originalXMLHttpRequest
   : global.XMLHttpRequest;
