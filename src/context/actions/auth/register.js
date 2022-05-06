@@ -5,7 +5,7 @@ export const register = ({ email, password, username, firstName, lastName }) => 
     console.log("XXX");
 
     const data= {
-        email:"lelldfffe@gmail.com", password:"123456789", username:"leleeeelele",first_name: "firstName",last_name: "lastName"   
+        email:"lelldddddfffffe@gmail.com", password:"123456789", username:"leffleeeeledddddle",first_name: "firstName",last_name: "lastName"   
     }
     try {
         const res = await axiosInstance.post('api/auth/register', data); 
