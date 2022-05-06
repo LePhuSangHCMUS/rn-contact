@@ -1,26 +1,22 @@
 import types from "../../types/index"
-import axiosInstance from "../../../helpers/axiosInstance"
-import axios from "axios"
-
+import axiosInstance from "../../../helpers/axiosInstance";
 export const register = ({ email, password, username, firstName, lastName }) => async(dispatch) => {
-    dispatch({type:types.REGISTER_LOADING})
+    dispatch({ type: types.REGISTER_LOADING });
+    console.log("XXX");
+
     const data= {
-        email, password, username,first_name: firstName,last_name: lastName   
+        email:"lelldfffe@gmail.com", password:"123456789", username:"leleeeelele",first_name: "firstName",last_name: "lastName"   
     }
-  const res=  await axios.post('https://truly-contacts.herokuapp.com/api/auth/register', data);
+    try {
+        const res = await axiosInstance.post('api/auth/register', data); 
         
-        console.log('res',res);
+        console.log("DATA",res.data);
         
-        
-    //     .then((data) => {
+        dispatch({type:types.REGISTER_SUCCESS, payload:data});    
 
-    //     console.log('Data',data);
-        
-    //     dispatch({type:types.REGISTER_SUCCESS, payload:data});    
- 
-    // }).catch(err => {
-    //     console.log("FAIL",err);
+    } catch (error) {
+        dispatch({ type: types.REGISTER_FAIL, payload:error})        
+        console.log("ERROR",error);
 
-    //     dispatch({ type: types.REGISTER_FAIL, payload:err})        
-    // })
+    }
 }

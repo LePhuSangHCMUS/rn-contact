@@ -8,7 +8,8 @@
 
 import React from 'react';
 import 'react-native-gesture-handler';
-global.XMLHttpRequest = global.originalXMLHttpRequest
+const networkDebugger = () => {
+  global.XMLHttpRequest = global.originalXMLHttpRequest
   ? global.originalXMLHttpRequest
   : global.XMLHttpRequest;
 global.FormData = global.originalFormData
@@ -30,8 +31,12 @@ if (window.__FETCH_SUPPORT__) {
     ? global.originalFileReader
     : global.FileReader;
 }
+}
 import {GlobalProvider} from "./src/context/Provider"
 import AppNavigationContainer from "./src/navigations";
+
+
+__DEV__?networkDebugger():null
 const App = () => {
 
   return (<GlobalProvider><AppNavigationContainer/></GlobalProvider> );

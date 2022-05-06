@@ -1,14 +1,18 @@
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import envs from "../config/env"
+// const HttpsProxyAgent = require("https-proxy-agent");
 
 const headers = {
-    
+    'Content-Type': 'application/json;charset=UTF-8',
+    "Access-Control-Allow-Origin": "*",
 }
+// const httpsAgent = new HttpsProxyAgent({host: "proxyhost", port: "proxyport"})
+
 
 const axiosInstance = axios.create({
     baseURL: envs?.BACKEND_URL,
-    headers
+    headers,
 })
 axiosInstance.interceptors.request.use(async (config) => {
         try {
@@ -19,10 +23,7 @@ axiosInstance.interceptors.request.use(async (config) => {
         return config;
 
     } catch (e) {
-        // saving error
-
-        console.log('ERROR AXIOS',e);
-        
+        // saving error        
       }
  
     

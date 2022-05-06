@@ -35,42 +35,41 @@ export default function Register() {
     navigate(routeNames.LOGIN, {});
 
   }
-console.log('authStates',loading);
-
   const handleRegister = () => {
+    register(form)(authDispatch)
     
-    if (!form.username) {
-      setErrors((prev) => {
-        return { ...prev, username: ERRORS.username }
-      })
-    }
-      if (!form.firstName) {
-        setErrors((prev) => {
-          return { ...prev, firstName:ERRORS.firstName }
-        })
-      }
-      if (!form.lastName) {
-        setErrors((prev) => {
-          return { ...prev,lastName: ERRORS.lastName}
-        })
-      }
-      if (!form.email) {
-        setErrors((prev) => {
-          return { ...prev, email: ERRORS.email}
-        })
-      }
-      if (!form.password) {
-        setErrors((prev) => {
-          return { ...prev,password: ERRORS.password }
-        })
-      }
+    // if (!form.username) {
+    //   setErrors((prev) => {
+    //     return { ...prev, username: ERRORS.username }
+    //   })
+    // }
+    //   if (!form.firstName) {
+    //     setErrors((prev) => {
+    //       return { ...prev, firstName:ERRORS.firstName }
+    //     })
+    //   }
+    //   if (!form.lastName) {
+    //     setErrors((prev) => {
+    //       return { ...prev,lastName: ERRORS.lastName}
+    //     })
+    //   }
+    //   if (!form.email) {
+    //     setErrors((prev) => {
+    //       return { ...prev, email: ERRORS.email}
+    //     })
+    //   }
+    //   if (!form.password) {
+    //     setErrors((prev) => {
+    //       return { ...prev,password: ERRORS.password }
+    //     })
+    //   }
     
-    if (Object.values(form).every(item => item.trim().length > 0) &&
-      Object.values(form).length === 5 &&
-      Object.values(errors).every(item => !item)
-    ) {
-      register(form)(authDispatch)
-    }
+    // if (Object.values(form).every(item => item.trim().length > 0) &&
+    //   Object.values(form).length === 5 &&
+    //   Object.values(errors).every(item => !item)
+    // ) {
+    //   register(form)(authDispatch)
+    // }
     
     }
     const handelChange = ({ name, value }) => {
