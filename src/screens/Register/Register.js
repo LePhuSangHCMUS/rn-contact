@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation ,useFocusEffect} from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { icFLC } from "../../assets/icons";
@@ -7,7 +7,7 @@ import CustomButton from "../../components/common/CustomButton";
 import InputCustom from "../../components/common/Input";
 import routeNames from "../../constants/routeNames";
 import styles from "./styles";
-import { register } from '../../context/actions/auth/register';
+import { register } from '../../context/actions/auth';
 // { navigation:{navigate}, route }
 import { GlobalContext } from '../../context/Provider';
 import envs from "../../config/env"
@@ -36,42 +36,40 @@ export default function Register() {
 
   }
   const handleRegister = () => {
-    register(form)(authDispatch)
-    
-    // if (!form.username) {
-    //   setErrors((prev) => {
-    //     return { ...prev, username: ERRORS.username }
-    //   })
-    // }
-    //   if (!form.firstName) {
-    //     setErrors((prev) => {
-    //       return { ...prev, firstName:ERRORS.firstName }
-    //     })
-    //   }
-    //   if (!form.lastName) {
-    //     setErrors((prev) => {
-    //       return { ...prev,lastName: ERRORS.lastName}
-    //     })
-    //   }
-    //   if (!form.email) {
-    //     setErrors((prev) => {
-    //       return { ...prev, email: ERRORS.email}
-    //     })
-    //   }
-    //   if (!form.password) {
-    //     setErrors((prev) => {
-    //       return { ...prev,password: ERRORS.password }
-    //     })
-    //   }
-    
-    // if (Object.values(form).every(item => item.trim().length > 0) &&
-    //   Object.values(form).length === 5 &&
-    //   Object.values(errors).every(item => !item)
-    // ) {
-    //   register(form)(authDispatch)
-    // }
-    
+    if (!form.username) {
+      setErrors((prev) => {
+        return { ...prev, username: ERRORS.username }
+      })
     }
+    if (!form.firstName) {
+      setErrors((prev) => {
+        return { ...prev, firstName: ERRORS.firstName }
+      })
+    }
+    if (!form.lastName) {
+      setErrors((prev) => {
+        return { ...prev, lastName: ERRORS.lastName }
+      })
+    }
+    if (!form.email) {
+      setErrors((prev) => {
+        return { ...prev, email: ERRORS.email }
+      })
+    }
+    if (!form.password) {
+      setErrors((prev) => {
+        return { ...prev, password: ERRORS.password }
+      })
+    }
+
+    if (Object.values(form).every(item => item.trim().length > 0) &&
+      Object.values(form).length === 5 &&
+      Object.values(errors).every(item => !item)
+    ) {
+      register(form)(authDispatch)
+    }
+
+  }
     const handelChange = ({ name, value }) => {
       if (value && errors?.[name]) {
         setErrors((prev) => {
@@ -86,7 +84,28 @@ export default function Register() {
       }
       setForm({ ...form, [name]: value });
     }
+  
+  useEffect(() => {
+
+    console.log('data', data);
     
+    if (data) {
+      handleNavigationLogin()
+    }
+
+
+  }, [data]);
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        if (data || error) {
+          clearAuthState()(authDispatch)
+        } 
+      }
+    }, [data,error])
+  );
+    
+ 
     
     return (<Container>
 
@@ -105,7 +124,7 @@ export default function Register() {
             placeholder="Enter username"
             onChangeText={handelChange}
             name="username"
-            error={errors.username}
+            error={errors.username||error?.username?.[0]}
           />
           <InputCustom
             label="First Name"
@@ -129,7 +148,7 @@ export default function Register() {
             placeholder="Enter email"
             onChangeText={handelChange}
             name="email"
-            error={errors.email}
+            error={errors.email||error?.email?.[0]}
 
           />
           <InputCustom
@@ -139,7 +158,7 @@ export default function Register() {
             placeholder="Enter Password"
             onChangeText={handelChange}
             name="password"
-            error={errors.password}
+            error={errors.password||error?.password?.[0]}
 
           />
 
