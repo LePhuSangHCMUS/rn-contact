@@ -62,3 +62,20 @@ export const login = ({ username, password }) => async (dispatch) => {
 
     }
 }
+
+export const logout = ({ }) => async (dispatch) => {
+    // dispatch({ type: types.LOGOUT_LOADING});
+    // try {
+
+    //     await AsyncStorage.removeItem('@user');
+    //     await AsyncStorage.removeItem('@token');
+    //     dispatch({ type: types.LOGIN_SUCCESS, payload: null });
+
+    // } catch (error) {
+    //     dispatch({
+    //         type: types.LOGOUT_FAIL,
+    //         payload: {error:"Something "}
+    //     })
+
+    // }
+}

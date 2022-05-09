@@ -23,7 +23,9 @@ export default function HomeNavigation() {
                                 <Text style={{ padding: 10 }}>Open</Text>
                             </TouchableOpacity>,// default is humbergerbutton
                         }}
-                        key={el?.id} name={el?.name} component={el?.component} />
+                        key={el?.id}
+                        name={el?.name}
+                        component={el?.component} />
                 })
             }
 

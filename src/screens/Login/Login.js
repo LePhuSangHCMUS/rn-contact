@@ -33,8 +33,6 @@ export default function DetailsScreen() {
 
   }
 
-console.log('erros',error);
-
   const handelChange = ({ name, value }) => {
     if (value && errors?.[name]) {
       setErrors((prev) => {
