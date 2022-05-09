@@ -84,7 +84,7 @@ console.log('erros',error);
       {error ? <Message onDismiss={() => {
 
         clearAuthState()(authDispatch)
-       }} primary message={ error?.detail} />:null}
+       }} danger message={ error?.detail} />:null}
 
       <View style={styles.form} >
 

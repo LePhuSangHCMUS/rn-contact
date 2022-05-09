@@ -30,21 +30,34 @@ export const CONTACT_ROUTERS=[
     {
         id:"1",
         name:routeNames.CONTACTS,
-        component:Contacts
+        component: Contacts,
+        headerShown: true, 
+        isDrawer:true,
+        
     },
     {
         id:"2",
         name:routeNames?.CREATE_CONTACT,
-        component:CreateContact
+        component: CreateContact,
+        headerShown: true,
+        isDrawer:false,
+        
+        
     },
     {
         id:"3",
         name:routeNames?.CONTACT_DETAIL,
-        component:ContactDetail
+        component: ContactDetail,
+        headerShown:true,
+        isDrawer:false,
+        
     },
     {
         id:"4",
         name:routeNames?.SETTING,
-        component:Setting
+        component: Setting,
+        headerShown:true,
+        isDrawer:true,
+        
     },
 ]

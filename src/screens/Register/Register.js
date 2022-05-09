@@ -11,8 +11,8 @@ import { register } from '../../context/actions/auth';
 // { navigation:{navigate}, route }
 import { GlobalContext } from '../../context/Provider';
 import envs from "../../config/env"
+import { clearAuthState, login } from '../../context/actions/auth';
 
-console.log('EB+NV',envs);
 
 const ERRORS={
   username:"Please enter username !" ,
@@ -26,11 +26,12 @@ export default function Register() {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const navigation = useNavigation();
+  const { navigate } = navigation
+
   const {
     authDispatch,
     authStates: { loading,error,data}
   } = useContext(GlobalContext)
-  const { navigate } = navigation
   const handleNavigationLogin = () => {
     navigate(routeNames.LOGIN, {});
 
