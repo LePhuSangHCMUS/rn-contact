@@ -1,33 +1,44 @@
 import React, { useMemo, useContext } from 'react'
-import { Text, SafeAreaView , Image, View} from 'react-native';
+import { Text, SafeAreaView , Image, View, Alert} from 'react-native';
 import Container from '../../components/common/Container';
 import styles from "./styles";
 import { icFLC } from "../../assets/icons";
-import { useNavigation } from '@react-navigation/native';
 import routeNames from '../../constants/routeNames';
 import { logout } from '../../context/actions/auth';
 import { GlobalContext } from '../../context/Provider';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function SideMenu() {
-
-  const navigation = useNavigation();
-  const { navigate } = navigation;
+export default function SideMenu({navigation}) {
+  // const { navigate } = navigation;
   const {
     authDispatch,
     authStates: { loading, error, data }
   } = useContext(GlobalContext);
   const handleLogout = () => {
-    logout()(authDispatch)
+    navigation.closeDrawer();
+    Alert.alert("Logout","Are you sure want to logout !",[
+      {
+        text: "Cancel",
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          logout()(authDispatch)
+        },
+        style: "ok",
+      },
+    ],)
   }
-  const menuItems = useMemo(() => {
-    return [
+
+  const menuItems = [
       {
         id:"1",
         icon: <Text>S</Text>,
         name: "Setting",
         onPress: () => {
-          navigate(routeNames.SETTING, {})
+          // navigate(routeNames.SETTING, {})
         }
       },
       {
@@ -39,7 +50,6 @@ export default function SideMenu() {
         }
       }
     ]
-  }, [])
   return (
     <SafeAreaView>
       <Container>
@@ -65,3 +75,5 @@ export default function SideMenu() {
     </SafeAreaView>
   )
 }
+
+

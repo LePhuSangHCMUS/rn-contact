@@ -1,7 +1,22 @@
 import types from "../../types/index"
 import axiosInstance from "../../../helpers/axiosInstance";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+export const logout = () => async (dispatch) => {
+    dispatch({ type: types.LOGOUT_LOADING});
+    try {
 
+        await AsyncStorage.removeItem('@user');
+        await AsyncStorage.removeItem('@token');
+        dispatch({ type: types.LOGIN_SUCCESS, payload: null });
+
+    } catch (error) {
+        dispatch({
+            type: types.LOGOUT_FAIL,
+            payload: {error:"Something "}
+        })
+
+    }
+}
 export const clearAuthState = () => dispatch => {
     dispatch({type:types.CLEAR_AUTH_STATE})
      
@@ -63,19 +78,3 @@ export const login = ({ username, password }) => async (dispatch) => {
     }
 }
 
-export const logout = ({ }) => async (dispatch) => {
-    // dispatch({ type: types.LOGOUT_LOADING});
-    // try {
-
-    //     await AsyncStorage.removeItem('@user');
-    //     await AsyncStorage.removeItem('@token');
-    //     dispatch({ type: types.LOGIN_SUCCESS, payload: null });
-
-    // } catch (error) {
-    //     dispatch({
-    //         type: types.LOGOUT_FAIL,
-    //         payload: {error:"Something "}
-    //     })
-
-    // }
-}

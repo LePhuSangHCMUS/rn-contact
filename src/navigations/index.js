@@ -12,7 +12,7 @@ export default AppNavigationContainer = () => {
     const [isAuthLoaded, setIsAuthLoaded] = useState(true);
     const {
         authStates: { isLoggedIn }
-    } = useContext(GlobalContext);
+    } = useContext(GlobalContext);    
     const getUser = async () => {
         
         try {

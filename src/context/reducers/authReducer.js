@@ -12,7 +12,7 @@ const auth = (state, { type, payload }) => {
         case types.LOGIN_LOADING:
             return { ...state, loading: true };
         case types.LOGIN_SUCCESS:
-            return { ...state, data: payload,isLoggedIn:true, error: null, loading: false };
+            return { ...state, data: payload,isLoggedIn:false, error: null, loading: false };
         case types.LOGIN_FAIL:
             return { ...state, error: payload, loading: false };
         case types.CLEAR_AUTH_STATE:

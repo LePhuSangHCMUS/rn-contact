@@ -8,11 +8,11 @@ import SideMenu from './SideMenu/SideMenu';
 
 export default function DrawerNavigation() {
 const Drawer = createDrawerNavigator();
-const dimensions = useWindowDimensions();
-return (
+  const dimensions = useWindowDimensions();
+  return (
    <Drawer.Navigator
        
-       drawerContent={()=><SideMenu/>}
+    drawerContent={({navigation}) => <SideMenu navigation={navigation} />}
        screenOptions={{
            drawerType: dimensions.width >= 768 ? 'permanent' : 'front',
            headerShown: false,
