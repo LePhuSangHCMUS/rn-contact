@@ -86,10 +86,7 @@ export default function Register() {
       setForm({ ...form, [name]: value });
     }
   
-  useEffect(() => {
-
-    console.log('data', data);
-    
+  useEffect(() => {    
     if (data) {
       handleNavigationLogin()
     }

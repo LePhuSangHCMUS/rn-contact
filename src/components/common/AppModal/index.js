@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, View, TouchableOpacity, ScrollView, Text } from "react-native"
 import styles from "./styles"
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-export default function Container({ style, children, visible, title, onClose, modalBody, modalFooter }) {
+export default function AppModal({ style, children, visible, title, onClose, modalBody, modalFooter }) {
     return (
         <Modal
             animationType="slide"

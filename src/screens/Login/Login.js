@@ -67,6 +67,21 @@ export default function DetailsScreen() {
     }
 
   }
+
+  useFocusEffect(
+
+    React.useCallback(() => {
+
+      console.log('LOGIN MOUN');
+
+      return () => {
+
+        console.log('LOGIN UNMOUNT');
+
+      }
+    }, [navigate])
+  );
+
   
   
   return (<Container>

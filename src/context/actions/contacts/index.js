@@ -5,7 +5,10 @@ export const getContacts = () => async (dispatch) => {
     dispatch({ type: types.GET_CONTACTS_LOADING });
     try {
         const res = await axiosInstance.get('/contacts');
-        dispatch({ type: types.GET_CONTACTS_SUCCESS, payload: res });
+
+        console.log('res',res);
+        
+        dispatch({ type: types.GET_CONTACTS_SUCCESS, payload: res?.data||[] });
 
     } catch (error) {
         dispatch({

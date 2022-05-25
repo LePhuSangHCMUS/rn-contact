@@ -1,19 +1,49 @@
 import React from 'react'
 import { Button, Text, View } from "react-native"
-export default function CreateContact({ navigation ,route }) {
+import Container from '../../components/common/Container'
+import styles from "./styles"
+import InputCustom from '../../components/common/Input'
+import CustomButton from '../../components/common/CustomButton'
+export default function CreateContact({ navigation, route }) {
+  // React.useEffect(() => {
+  //   if (route.params?.post) {
+  //     // Post updated, do something with `route.params.post`
+  //     // For example, send the post to the server
+  //   }
+  // }, [route.params?.post]);
+  return (<View style={styles.screen}>
+    <Container>
+      <InputCustom
+        label="First name"
+        name="firsName"
+        // onChangeText={handelChange}
+        // error={errors.username || error?.username?.[0]}
+        placeholder="Enter first name"
+      />
+      <InputCustom
+        label="Last name"
+        name="lastName"
+        // onChangeText={handelChange}
+        // error={errors.username || error?.username?.[0]}
+        placeholder="Enter last name"
+      />
+      <InputCustom
+        label="Phone Number"
+        name="phone"
+        // onChangeText={handelChange}
+        // error={errors.username || error?.username?.[0]}
+        placeholder="Enter username"
+      />
 
-  React.useEffect(() => {
-    if (route.params?.post) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.post]);
-  return (<View>
-    <Text>Create Contact</Text>
-    {/* <Button
-      title="Go to Details"
-      onPress={() => navigation.navigate('Details')}
-    /> */}
+      <CustomButton primary title="Create"
+        // disabled={loading} loading={loading}
+        // onPress={handleLogin}
+      
+      />
+
+
+    </Container>
+
   </View>
   )
 }
