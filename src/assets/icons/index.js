@@ -1,4 +1,4 @@
-import icFLC from "./ic-flc.png"
+import icFLC from "./ic-contact.png"
 export  {
     icFLC
 }

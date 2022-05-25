@@ -28,9 +28,6 @@ export const register = ({ email, password, username, firstName, lastName }) => 
             email, password, username, first_name: firstName, last_name: lastName
         }
         const res = await axiosInstance.post('/auth/register', data);
-
-        console.log("DATA", res.data);
-
         dispatch({ type: types.REGISTER_SUCCESS, payload: data });
 
     } catch (error) {
@@ -49,7 +46,6 @@ export const login = ({ username, password }) => async (dispatch) => {
             password, username, 
         }
         const res = await axiosInstance.post('/auth/login', data);
-       
         const token = res?.data?.token;
         const user = res?.data?.user;
 
@@ -66,7 +62,7 @@ export const login = ({ username, password }) => async (dispatch) => {
         }
         
 
-        dispatch({ type: types.LOGIN_SUCCESS, payload: data });
+        dispatch({ type: types.LOGIN_SUCCESS, payload: res });
 
     } catch (error) {
         dispatch({

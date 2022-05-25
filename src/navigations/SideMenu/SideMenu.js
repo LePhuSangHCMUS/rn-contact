@@ -7,9 +7,10 @@ import routeNames from '../../constants/routeNames';
 import { logout } from '../../context/actions/auth';
 import { GlobalContext } from '../../context/Provider';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function SideMenu({navigation}) {
-  // const { navigate } = navigation;
+  const { navigate } = navigation;
   const {
     authDispatch,
     authStates: { loading, error, data }
@@ -35,15 +36,15 @@ export default function SideMenu({navigation}) {
   const menuItems = [
       {
         id:"1",
-        icon: <Text>S</Text>,
+        icon: <MaterialIcons style={{paddingRight:10}} name='settings' size={17}/>,
         name: "Setting",
         onPress: () => {
-          // navigate(routeNames.SETTING, {})
+          navigate(routeNames.SETTING, {})
         }
       },
       {
         id:"2",
-        icon: <Text>L</Text>,
+        icon: <MaterialIcons style={{paddingRight:10}} name='logout' size={27}/>,
         name: "Logout",
         onPress: () => {
           handleLogout()

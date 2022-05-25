@@ -3,8 +3,7 @@ import React from 'react';
 import { CONTACT_ROUTERS } from "../constants/routeOptions.js";
 import { useWindowDimensions, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 export default function HomeNavigation() {
     const HomeStack = createNativeStackNavigator();
     const navigation = useNavigation()
@@ -20,7 +19,7 @@ export default function HomeNavigation() {
                         options={{
                             headerShown: el?.headerShown,
                             headerLeft: () => <TouchableOpacity onPress={handleOpenDrawerNavigation} >
-                                <Text style={{ padding: 10 }}>Open</Text>
+                                <MaterialIcons style={{paddingRight:10}} name='menu' size={25}/>
                             </TouchableOpacity>,// default is humbergerbutton
                         }}
                         key={el?.id}
