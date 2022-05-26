@@ -1,9 +1,10 @@
 import React from 'react'
-import { Button, Text, View } from "react-native"
+import { Button, Text, View, Image } from "react-native"
 import Container from '../../components/common/Container'
 import styles from "./styles"
 import InputCustom from '../../components/common/Input'
 import CustomButton from '../../components/common/CustomButton'
+import {icUserDefault} from "../../assets/icons"
 export default function CreateContact({ navigation, route }) {
   // React.useEffect(() => {
   //   if (route.params?.post) {
@@ -13,6 +14,8 @@ export default function CreateContact({ navigation, route }) {
   // }, [route.params?.post]);
   return (<View style={styles.screen}>
     <Container>
+      <Image style={styles.userDefault} source={icUserDefault} />
+      <Text  style={styles.chooseText}>Choose image</Text>
       <InputCustom
         label="First name"
         name="firsName"
