@@ -16,7 +16,21 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
           fontWeight:"bold"
-    }
+    },
+    avatar: {
+            width: 50,
+            height: 50,
+            borderRadius:100
+          
+    },
+    item: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginVertical:10
+    },
+    name: {
+         paddingHorizontal:15
+     }
 
 
 })

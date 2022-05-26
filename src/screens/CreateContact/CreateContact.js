@@ -1,47 +1,128 @@
-import React from 'react'
+import React, {useState ,useContext}  from 'react'
 import { Button, Text, View, Image } from "react-native"
 import Container from '../../components/common/Container'
 import styles from "./styles"
 import InputCustom from '../../components/common/Input'
 import CustomButton from '../../components/common/CustomButton'
-import {icUserDefault} from "../../assets/icons"
+import { icUserDefault } from "../../assets/icons"
+import CountryPicker from 'react-native-country-picker-modal'
+import { GlobalContext } from '../../context/Provider';
+import { createContact } from '../../context/actions/contacts';
+
+const ERRORS={
+  firstName:"Please enter first name !" ,
+  lastName: "Please enter last name !",
+  phone:"Please enter phone"
+}
 export default function CreateContact({ navigation, route }) {
-  // React.useEffect(() => {
-  //   if (route.params?.post) {
-  //     // Post updated, do something with `route.params.post`
-  //     // For example, send the post to the server
-  //   }
-  // }, [route.params?.post]);
+  const {
+    contactDispatch,
+    contactStates: {
+      createContacts:{data,
+      loading,
+      error}
+    }
+  } = useContext(GlobalContext);
+   
+  const [form, setForm] = useState({});
+  const [errors, setErrors] = useState({});
+  const handelChange = ({ name, value }) => {
+    
+    if (value && errors?.[name]) {
+      setErrors((prev) => {
+        return { ...prev,[name]: null }
+      })
+    }
+    if (!value && !errors?.[name]) {
+
+      setErrors((prev) => {
+        return { ...prev,[name]: ERRORS?.[name] }
+      })
+    }
+    setForm({ ...form, [name]: value });
+  }
+
+  const handleCreate = () => {
+    if (!form.firstName) {
+      setErrors((prev) => {
+        return { ...prev, firstName: ERRORS.firstName }
+      })
+    }
+    if (!form.lastName) {
+      setErrors((prev) => {
+        return { ...prev, lastName: ERRORS.lastName }
+      })
+    }
+    if (!form.phone) {
+      setErrors((prev) => {
+        return { ...prev, phone: ERRORS.phone }
+      })
+    }
+    const data = {
+      first_name: form?.firstName,
+      last_name: form?.lastName,
+      phone_number: form?.phone,
+      country_code:callingCode
+    }
+
+  console.log("Enter")
+    createContact(data)(contactDispatch)
+  }
+  const [countryCode, setCountryCode] = useState('VN');
+  const [callingCode, setCallingCode] = useState('84');
+  const onSelect = (country) => {
+    console.log(country)
+    setCountryCode(country.cca2)
+    setCallingCode(country?.callingCode[0])
+  }
   return (<View style={styles.screen}>
     <Container>
       <Image style={styles.userDefault} source={icUserDefault} />
       <Text  style={styles.chooseText}>Choose image</Text>
       <InputCustom
         label="First name"
-        name="firsName"
-        // onChangeText={handelChange}
-        // error={errors.username || error?.username?.[0]}
+        name="firstName"
+        onChangeText={handelChange}
+        error={errors.firstName }
         placeholder="Enter first name"
       />
       <InputCustom
         label="Last name"
         name="lastName"
-        // onChangeText={handelChange}
-        // error={errors.username || error?.username?.[0]}
+        onChangeText={handelChange}
+        error={errors.lastName }
         placeholder="Enter last name"
       />
       <InputCustom
         label="Phone Number"
         name="phone"
-        // onChangeText={handelChange}
-        // error={errors.username || error?.username?.[0]}
-        placeholder="Enter username"
+        onChangeText={handelChange}
+        error={errors.phone }
+        placeholder="Enter phone"
+        icon={<CountryPicker
+            countryCode={countryCode}
+            withFilter
+            withFlag
+            withCountryNameButton={false}
+            withAlphaFilter
+          withCallingCode
+          withCallingCodeButton
+          
+            withEmoji
+          onSelect={onSelect}
+          containerButtonStyle={{
+            marginRight:10
+          }}
+        />
+        }
       />
 
-      <CustomButton primary title="Create"
-        // disabled={loading} loading={loading}
-        // onPress={handleLogin}
-      
+      <CustomButton
+        primary
+        title="Create"
+        onPress={handleCreate}
+        disabled={loading}
+        loading={loading}
       />
 
 

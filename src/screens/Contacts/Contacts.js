@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
-import { Button, Text, TouchableOpacity, FlatList, View, ActivityIndicator } from "react-native";
+import { Button, Text, TouchableOpacity, FlatList, View, ActivityIndicator,Image } from "react-native";
 import Container from '../../components/common/Container';
 import AppModal from '../../components/common/AppModal'
 import CustomButton from '../../components/common/CustomButton';
@@ -19,9 +19,11 @@ export default function Contacts() {
   const {
     contactDispatch,
     contactStates: {
-      data,
-      loading,
-      error
+      getContacts: {
+        data,
+        loading,
+        error
+      }
     }
   } = useContext(GlobalContext);
   const ListEmptyComponent = () => {
@@ -33,28 +35,37 @@ export default function Contacts() {
   const handleCloseModal = () => {
     setModalVisible(false)
   }
-  const Item = ({ title }) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
+  const Item = ({ item }) => {
+    // console.log(name);
+    
+    return (
+      <View style={styles.item}>
+        <Image style={styles.avatar} source={ {uri:item?.avatar} } />
+        
+        <Text style={styles.name} >{ item.name}</Text>
+        <Text style={styles.phone} >{ item.phone}</Text>
+      </View>
+    )
+  }
 
   const renderContactItem = ({ item }) => {
-    return <Item title={item?.title} />
+    return <Item item={item} />
   }
   const handleNavigationToCreate = () => {
-    navigate(routeNames.CREATE_CONTACT, {});    
+    navigate(routeNames.CREATE_CONTACT, {});
 
-}
+  }
   useEffect(() => {
     getContacts()(contactDispatch)
   }, [])
+
+  console.log(data)
   return (
     <Fragment>
 
       <Container>
         {
-          false ? <ActivityIndicator /> : <FlatList
+          loading ? <ActivityIndicator /> : <FlatList
             data={data}
             renderItem={renderContactItem}
             keyExtractor={item => item.id}
@@ -62,12 +73,14 @@ export default function Contacts() {
           />
 
         }
-        <AppModal title={"Information"} visible={modalVisible} onClose={handleCloseModal} />
+        {/* <AppModal title={"Information"} visible={modalVisible} onClose={handleCloseModal} /> */}
 
 
 
       </Container>
 
+      
+    {/* Button Create */}
       <TouchableOpacity onPress={handleNavigationToCreate} style={styles.floatingActionButton}>
 
         <MaterialIcons name='add' size={20} style={{
