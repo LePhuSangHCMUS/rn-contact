@@ -146,7 +146,16 @@ export default function CreateContact({ navigation, route }) {
       
 
       {/* Modal */}
-      <ImagePicker onClose={handleCloseBottomSheet} bottomRef={ bottomRef}/>
+      <ImagePicker bottomRef={bottomRef} >
+        <View>
+        <CustomButton
+        primary
+        title="Close"
+        onPress={handleCloseBottomSheet}
+ 
+      />
+        </View>
+      </ImagePicker>
 
 
     </Container>

@@ -7,7 +7,7 @@ import {
 // import RBSheet from "react-native-raw-bottom-sheet";
 
 import styles from "./styles"
-function ImagePicker({ style,onClose, children,bottomRef, ...rest }) {
+function ImagePicker({ style, children,bottomRef, ...rest }) {
     // variables
     const snapPoints = useMemo(() => ['25%', '50%'], []);
 
@@ -23,7 +23,6 @@ function ImagePicker({ style,onClose, children,bottomRef, ...rest }) {
              snapPoints={snapPoints}
             onChange={handleSheetChanges}
             style={styles.component}
-            onDismiss={onClose}
             >
                 {children}
             </BottomSheetModal>
