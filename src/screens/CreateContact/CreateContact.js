@@ -10,11 +10,46 @@ import { GlobalContext } from '../../context/Provider';
 import { createContact } from '../../context/actions/contacts';
 import ImagePicker from '../../components/common/ImagePicker'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ImageCropPicker  from 'react-native-image-crop-picker';
+
 const ERRORS={
   firstName:"Please enter first name !" ,
   lastName: "Please enter last name !",
   phone:"Please enter phone"
 }
+
+const OPTIONS = [
+  {
+    id: "1",
+    label: "Take from camera",
+    icon: <MaterialIcons name='camera' size={20} />,
+    onPress: () => {
+      ImageCropPicker?.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+      }).then(image => {
+        console.log(image);
+      });
+    }
+  },
+  {
+    id: "2",
+    label: "Choose from gallery",
+    icon: <MaterialIcons name='photo' size={20} />,
+    onPress: () => {
+      ImageCropPicker?.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+      }).then(image => {
+        console.log(image);
+      });
+    }
+    
+  }
+]
 export default function CreateContact({ navigation, route }) {
   const {
     contactDispatch,
@@ -147,13 +182,17 @@ export default function CreateContact({ navigation, route }) {
 
       {/* Modal */}
       <ImagePicker bottomRef={bottomRef} >
-        <View>
-        <CustomButton
-        primary
-        title="Close"
-        onPress={handleCloseBottomSheet}
- 
-      />
+        <View style={styles.optionContainer}> 
+          {
+            OPTIONS?.map((el) => {
+              return <TouchableOpacity key={el?.id} onPress={el?.onPress}> 
+                <View style={styles?.optionItem}>  
+                  {el?.icon}
+                  <Text  style={styles.optionLabel}>{ el?.label}</Text>
+                </View>
+              </TouchableOpacity>
+            })
+          }
         </View>
       </ImagePicker>
 
