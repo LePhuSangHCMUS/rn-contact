@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, Fragment } from 'react'
-import { Button, Text, TouchableOpacity, FlatList, View, ActivityIndicator,Image } from "react-native";
+import { Button, Text, TouchableOpacity, FlatList, View, ActivityIndicator, Image } from "react-native";
 import Container from '../../components/common/Container';
 import AppModal from '../../components/common/AppModal'
 import CustomButton from '../../components/common/CustomButton';
@@ -10,7 +10,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../assets/themes/colors';
 import { useNavigation } from '@react-navigation/native';
 import routeNames from "../../constants/routeNames";
-
+import { icUserDefault } from "../../assets/icons"
+import AntDesign from 'react-native-vector-icons/AntDesign';
 export default function Contacts() {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation()
@@ -35,15 +36,23 @@ export default function Contacts() {
   const handleCloseModal = () => {
     setModalVisible(false)
   }
-  const Item = ({ item }) => {
+  const Item = ({ item,key }) => {
     // console.log(name);
-    
+
     return (
-      <View style={styles.item}>
-        <Image style={styles.avatar} source={ {uri:item?.avatar} } />
-        
-        <Text style={styles.name} >{ item.name}</Text>
-        <Text style={styles.phone} >{ item.phone}</Text>
+      <View style={styles.itemContainer} key={key}>
+        <View style={styles.item}>
+          <Image style={styles.avatar} source={item?.avatar ? { uri: item?.avatar } : icUserDefault} />
+          <View style={{
+            flexDirection: "row"
+          }}>
+            <Text style={styles.name} >{item.name}</Text>
+            <Text style={styles.phone} >{item.phone}</Text>
+          </View>
+        </View>
+
+        <MaterialIcons size={17} name='send' />
+
       </View>
     )
   }
@@ -59,11 +68,9 @@ export default function Contacts() {
     getContacts()(contactDispatch)
   }, [])
 
-  console.log(data)
   return (
     <Fragment>
-
-      <Container>
+      <View style={styles.screen}>
         {
           loading ? <ActivityIndicator /> : <FlatList
             data={data}
@@ -77,16 +84,17 @@ export default function Contacts() {
 
 
 
-      </Container>
 
-      
-    {/* Button Create */}
-      <TouchableOpacity onPress={handleNavigationToCreate} style={styles.floatingActionButton}>
 
-        <MaterialIcons name='add' size={20} style={{
-          color: colors.white
-        }} />
-      </TouchableOpacity>
+        {/* Button Create */}
+        <TouchableOpacity onPress={handleNavigationToCreate} style={styles.floatingActionButton}>
+
+          <MaterialIcons name='add' size={20} style={{
+            color: colors.white
+          }} />
+        </TouchableOpacity>
+      </View>
+
     </Fragment>
 
   )

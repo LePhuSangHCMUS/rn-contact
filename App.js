@@ -9,6 +9,10 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import { NativeModules } from 'react-native';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
 const networkDebugger = () => {
  //Enable Default Debuggerr
   // NativeModules.DevSettings.setIsDebuggingRemotely(true);
@@ -47,7 +51,12 @@ import AppNavigationContainer from "./src/navigations";
 __DEV__?networkDebugger():null
 const App = () => {
 
-  return (<GlobalProvider><AppNavigationContainer/></GlobalProvider> );
+  return (<GlobalProvider>
+    <BottomSheetModalProvider>
+  <AppNavigationContainer/>
+  </BottomSheetModalProvider>
+
+  </GlobalProvider > );
 };
 
 

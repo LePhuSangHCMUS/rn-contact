@@ -14,7 +14,6 @@ axiosInstance.interceptors.request.use(async (config) => {
         try {
             const token = await AsyncStorage.getItem('@token');
             
-            console.log("TOken",token)
         if (token) {
             config.headers.Authorization=`Bearer ${token}`
         }
@@ -22,8 +21,6 @@ axiosInstance.interceptors.request.use(async (config) => {
 
     } catch (e) {
         // saving error
-
-        console.log('ERROR AXIOS',e);
         
       }
  

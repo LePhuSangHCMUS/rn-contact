@@ -5,6 +5,9 @@ export default StyleSheet.create({
     NoData: {
         alignItems: "center"
     },
+
+    screen: {
+    },
     floatingActionButton: {
         backgroundColor: "red",
         width: 55,
@@ -15,22 +18,29 @@ export default StyleSheet.create({
         borderRadius: 100,
         justifyContent: "center",
         alignItems: "center",
-          fontWeight:"bold"
+        fontWeight: "bold"
     },
     avatar: {
-            width: 50,
-            height: 50,
-            borderRadius:100
-          
+        width: 50,
+        height: 50,
+        borderRadius: 100
+
+    },
+    itemContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginVertical: 10,
+        justifyContent: "space-between",
+        paddingHorizontal:20
+        
     },
     item: {
         flexDirection: "row",
         alignItems: "center",
-        marginVertical:10
     },
     name: {
-         paddingHorizontal:15
-     }
+        paddingHorizontal: 5
+    },
 
 
 })

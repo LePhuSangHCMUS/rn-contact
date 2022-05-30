@@ -32,7 +32,7 @@ export const CONTACT_ROUTERS=[
         name:routeNames.CONTACTS,
         component: Contacts,
         headerShown: true, 
-        isDrawer:true,
+        showMenu:true,
         
     },
     {
@@ -40,7 +40,7 @@ export const CONTACT_ROUTERS=[
         name:routeNames?.CREATE_CONTACT,
         component: CreateContact,
         headerShown: true,
-        isDrawer:false,
+        showMenu:false,
         
         
     },
@@ -49,7 +49,7 @@ export const CONTACT_ROUTERS=[
         name:routeNames?.CONTACT_DETAIL,
         component: ContactDetail,
         headerShown:true,
-        isDrawer:false,
+        showMenu:false,
         
     },
     {
@@ -57,7 +57,7 @@ export const CONTACT_ROUTERS=[
         name:routeNames?.SETTING,
         component: Setting,
         headerShown:true,
-        isDrawer:true,
+        showMenu:false,
         
     },
 ]

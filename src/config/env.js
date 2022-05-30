@@ -7,6 +7,6 @@ const prodEnvironmentVariables = {
     BACKEND_URL:REACT_APP_PROD_BACKEND_URL
 }
 
-console.log("devEnvironmentVariables",devEnvironmentVariables)
+// console.log("devEnvironmentVariables",devEnvironmentVariables)
 
 export default __DEV__ ? devEnvironmentVariables : prodEnvironmentVariables

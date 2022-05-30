@@ -1,4 +1,4 @@
-import React, {useState ,useContext}  from 'react'
+import React, {useState ,useContext, useRef,useCallback}  from 'react'
 import { Button, Text, View, Image } from "react-native"
 import Container from '../../components/common/Container'
 import styles from "./styles"
@@ -8,7 +8,8 @@ import { icUserDefault } from "../../assets/icons"
 import CountryPicker from 'react-native-country-picker-modal'
 import { GlobalContext } from '../../context/Provider';
 import { createContact } from '../../context/actions/contacts';
-
+import ImagePicker from '../../components/common/ImagePicker'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 const ERRORS={
   firstName:"Please enter first name !" ,
   lastName: "Please enter last name !",
@@ -25,7 +26,8 @@ export default function CreateContact({ navigation, route }) {
   } = useContext(GlobalContext);
    
   const [form, setForm] = useState({});
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); 4
+  const bottomRef=useRef(null)
   const handelChange = ({ name, value }) => {
     
     if (value && errors?.[name]) {
@@ -75,10 +77,26 @@ export default function CreateContact({ navigation, route }) {
     setCountryCode(country.cca2)
     setCallingCode(country?.callingCode[0])
   }
+  const handleOpenBottomSheet = () => {
+      
+    console.log('REF',bottomRef);
+    
+      bottomRef.current?.present();
+    };
+  const handleCloseBottomSheet = () => {
+          
+      bottomRef.current?.close();
+    };
+  
   return (<View style={styles.screen}>
     <Container>
       <Image style={styles.userDefault} source={icUserDefault} />
+
+      <TouchableOpacity onPress={handleOpenBottomSheet}>
       <Text  style={styles.chooseText}>Choose image</Text>
+        
+      </TouchableOpacity>
+
       <InputCustom
         label="First name"
         name="firstName"
@@ -124,6 +142,11 @@ export default function CreateContact({ navigation, route }) {
         disabled={loading}
         loading={loading}
       />
+ 
+      
+
+      {/* Modal */}
+      <ImagePicker onClose={handleCloseBottomSheet} bottomRef={ bottomRef}/>
 
 
     </Container>

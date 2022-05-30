@@ -18,9 +18,11 @@ export default function HomeNavigation() {
                     return <HomeStack.Screen
                         options={{
                             headerShown: el?.headerShown,
-                            headerLeft: () => <TouchableOpacity onPress={handleOpenDrawerNavigation} >
-                                <MaterialIcons style={{paddingRight:10}} name='menu' size={25}/>
-                            </TouchableOpacity>,// default is humbergerbutton
+                            ...el.showMenu ? {
+                                headerLeft: () => <TouchableOpacity onPress={handleOpenDrawerNavigation} >
+                                    <MaterialIcons style={{ paddingRight: 10 }} name='menu' size={25} />
+                                </TouchableOpacity>,// default is humbergerbutton}
+                            } : {}
                         }}
                         key={el?.id}
                         name={el?.name}
