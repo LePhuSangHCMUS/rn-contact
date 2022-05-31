@@ -7,6 +7,14 @@ export default StyleSheet.create({
     },
 
     screen: {
+
+        flex:1
+    },
+   indicator: {
+        flex: 1,
+        justifyContent: "center",
+          alignItems:"center"
+
     },
     floatingActionButton: {
         backgroundColor: "red",

@@ -72,7 +72,7 @@ export default function Contacts() {
     <Fragment>
       <View style={styles.screen}>
         {
-          loading ? <ActivityIndicator /> : <FlatList
+          loading ?<View style={styles.indicator}><ActivityIndicator /></View>  : <FlatList
             data={data}
             renderItem={renderContactItem}
             keyExtractor={item => item.id}

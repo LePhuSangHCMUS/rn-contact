@@ -1,5 +1,5 @@
 import React, {useState ,useContext, useRef,useCallback}  from 'react'
-import { Button, Text, View, Image ,TouchableOpacity,PermissionsAndroid,Platform} from "react-native"
+import { Button, Text, View, Image ,TouchableOpacity,PermissionsAndroid,Platform,Linking} from "react-native"
 import Container from '../../components/common/Container'
 import styles from "./styles"
 import InputCustom from '../../components/common/Input'
@@ -25,16 +25,22 @@ const OPTIONS = [
     icon: <MaterialIcons name='camera' size={20} />,
     onPress: async () => {
 
-      console.log('PermissionsAndroid.PERMISSIONS.CAMERA',PermissionsAndroid.PERMISSIONS.CAMERA);
       
       if(Platform.OS=="android"){
         const permissionAndroid = await PermissionsAndroid.check('android.permission.CAMERA');
+        
+        console.log('permissionAndroid', permissionAndroid);
+
+
         if(permissionAndroid != PermissionsAndroid.RESULTS.granted){
           const reqPer = await PermissionsAndroid.request('android.permission.CAMERA');
 
           console.log('reqPer',reqPer);
           
-          if(reqPer != 'granted'){
+          if (reqPer != 'granted') {
+            
+            // Linking.openSettings();
+
             return false;
           } else {
             ImageCropPicker?.openCamera({
