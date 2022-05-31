@@ -1,5 +1,5 @@
 import React, {useState ,useContext, useRef,useCallback}  from 'react'
-import { Button, Text, View, Image } from "react-native"
+import { Button, Text, View, Image ,TouchableOpacity,PermissionsAndroid,Platform} from "react-native"
 import Container from '../../components/common/Container'
 import styles from "./styles"
 import InputCustom from '../../components/common/Input'
@@ -9,7 +9,6 @@ import CountryPicker from 'react-native-country-picker-modal'
 import { GlobalContext } from '../../context/Provider';
 import { createContact } from '../../context/actions/contacts';
 import ImagePicker from '../../components/common/ImagePicker'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ImageCropPicker  from 'react-native-image-crop-picker';
 
@@ -24,14 +23,46 @@ const OPTIONS = [
     id: "1",
     label: "Take from camera",
     icon: <MaterialIcons name='camera' size={20} />,
-    onPress: () => {
-      ImageCropPicker?.openCamera({
-        width: 300,
-        height: 400,
-        cropping: true,
-      }).then(image => {
-        console.log(image);
-      });
+    onPress: async () => {
+
+      console.log('PermissionsAndroid.PERMISSIONS.CAMERA',PermissionsAndroid.PERMISSIONS.CAMERA);
+      
+      if(Platform.OS=="android"){
+        const permissionAndroid = await PermissionsAndroid.check('android.permission.CAMERA');
+        if(permissionAndroid != PermissionsAndroid.RESULTS.granted){
+          const reqPer = await PermissionsAndroid.request('android.permission.CAMERA');
+
+          console.log('reqPer',reqPer);
+          
+          if(reqPer != 'granted'){
+            return false;
+          } else {
+            ImageCropPicker?.openCamera({
+              width: 300,
+              height: 400,
+              cropping: true,
+            }).then(image => {
+              console.log(image);
+            }).catch(err => {
+              console.log('Err',err);
+              
+            });
+          }
+        } else {
+          ImageCropPicker?.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+          }).then(image => {
+            console.log(image);
+          }).catch(err => {
+            console.log('Err',err);
+            
+          });
+        }
+      }
+    
+    
     }
   },
   {
@@ -40,9 +71,7 @@ const OPTIONS = [
     icon: <MaterialIcons name='photo' size={20} />,
     onPress: () => {
       ImageCropPicker?.openCamera({
-        width: 300,
-        height: 400,
-        cropping: true,
+        multiple: true,
       }).then(image => {
         console.log(image);
       });
@@ -101,8 +130,6 @@ export default function CreateContact({ navigation, route }) {
       phone_number: form?.phone,
       country_code:callingCode
     }
-
-  console.log("Enter")
     createContact(data)(contactDispatch)
   }
   const [countryCode, setCountryCode] = useState('VN');
@@ -112,15 +139,8 @@ export default function CreateContact({ navigation, route }) {
     setCountryCode(country.cca2)
     setCallingCode(country?.callingCode[0])
   }
-  const handleOpenBottomSheet = () => {
-      
-    console.log('REF',bottomRef);
-    
+  const handleOpenBottomSheet = () => {    
       bottomRef.current?.present();
-    };
-  const handleCloseBottomSheet = () => {
-          
-      bottomRef.current?.close();
     };
   
   return (<View style={styles.screen}>
