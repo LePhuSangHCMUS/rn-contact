@@ -18,73 +18,7 @@ const ERRORS={
   phone:"Please enter phone"
 }
 
-const OPTIONS = [
-  {
-    id: "1",
-    label: "Take from camera",
-    icon: <MaterialIcons name='camera' size={20} />,
-    onPress: async () => {
 
-      
-      if(Platform.OS=="android"){
-        const permissionAndroid = await PermissionsAndroid.check('android.permission.CAMERA');
-        
-        console.log('permissionAndroid', permissionAndroid);
-
-
-        if(permissionAndroid != PermissionsAndroid.RESULTS.granted){
-          const reqPer = await PermissionsAndroid.request('android.permission.CAMERA');
-
-          console.log('reqPer',reqPer);
-          
-          if (reqPer != 'granted') {
-            
-            // Linking.openSettings();
-
-            return false;
-          } else {
-            ImageCropPicker?.openCamera({
-              width: 300,
-              height: 400,
-              cropping: true,
-            }).then(image => {
-              console.log(image);
-            }).catch(err => {
-              console.log('Err',err);
-              
-            });
-          }
-        } else {
-          ImageCropPicker?.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-          }).then(image => {
-            console.log(image);
-          }).catch(err => {
-            console.log('Err',err);
-            
-          });
-        }
-      }
-    
-    
-    }
-  },
-  {
-    id: "2",
-    label: "Choose from gallery",
-    icon: <MaterialIcons name='photo' size={20} />,
-    onPress: () => {
-      ImageCropPicker?.openCamera({
-        multiple: true,
-      }).then(image => {
-        console.log(image);
-      });
-    }
-    
-  }
-]
 export default function CreateContact({ navigation, route }) {
   const {
     contactDispatch,
@@ -97,7 +31,91 @@ export default function CreateContact({ navigation, route }) {
    
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({}); 4
-  const bottomRef=useRef(null)
+  const bottomRef = useRef(null);
+  const [avatar,setAvatar]=useState(icUserDefault)
+
+  const OPTIONS = [
+    {
+      id: "1",
+      label: "Take from camera",
+      icon: <MaterialIcons name='camera' size={20} />,
+      onPress: async () => {
+  
+        
+        if(Platform.OS=="android"){
+          const permissionAndroid = await PermissionsAndroid.check('android.permission.CAMERA');
+          
+          console.log('permissionAndroid', permissionAndroid);
+  
+  
+          if(permissionAndroid != PermissionsAndroid.RESULTS.granted){
+            const reqPer = await PermissionsAndroid.request('android.permission.CAMERA');
+  
+            console.log('reqPer',reqPer);
+            
+            if (reqPer != 'granted') {
+              
+              // Linking.openSettings();
+  
+              return false;
+            } else {
+              ImageCropPicker?.openCamera({
+                width: 300,
+                height: 400,
+                cropping: true,
+                freeStyleCropEnabled:true,
+              }).then(image => {
+                console.log(image);
+
+                setAvatar(image);
+                handleCloseBottomSheet()
+                
+
+              }).catch(err => {
+                console.log('Err',err);
+                
+              });
+            }
+          } else {
+            ImageCropPicker?.openCamera({
+              width: 300,
+              height: 400,
+              cropping: true,
+              freeStyleCropEnabled:true,
+  
+            }).then(image => {
+              setAvatar(image);
+              handleCloseBottomSheet()
+
+            }).catch(err => {
+              console.log('Err',err);
+              
+            });
+          }
+        }
+      
+      
+      }
+    },
+    {
+      id: "2",
+      label: "Choose from gallery",
+      icon: <MaterialIcons name='photo' size={20} />,
+      onPress: () => {
+        ImageCropPicker?.openPicker({
+          width: 300,
+          height: 400,
+          cropping: true,
+          freeStyleCropEnabled:true,
+    
+          multiple: true,
+        }).then(image => {
+          console.log(image);
+        });
+      }
+      
+    }
+  ]
   const handelChange = ({ name, value }) => {
     
     if (value && errors?.[name]) {
@@ -141,17 +159,19 @@ export default function CreateContact({ navigation, route }) {
   const [countryCode, setCountryCode] = useState('VN');
   const [callingCode, setCallingCode] = useState('84');
   const onSelect = (country) => {
-    console.log(country)
     setCountryCode(country.cca2)
     setCallingCode(country?.callingCode[0])
   }
   const handleOpenBottomSheet = () => {    
       bottomRef.current?.present();
     };
+  const handleCloseBottomSheet = () => {    
+      bottomRef.current?.dismiss();
+    };
   
   return (<View style={styles.screen}>
     <Container>
-      <Image style={styles.userDefault} source={icUserDefault} />
+      <Image style={styles.userDefault} source={avatar?.path ? {uri:avatar?.path}:icUserDefault} />
 
       <TouchableOpacity onPress={handleOpenBottomSheet}>
       <Text  style={styles.chooseText}>Choose image</Text>
